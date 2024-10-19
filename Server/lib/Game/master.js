@@ -483,6 +483,8 @@ function joinNewUser($c) {
 		id: $c.id,
 		guest: $c.guest,
 		box: $c.box,
+		nickname: $c.nickname,
+		exordial: $c.exordial,
 		playTime: $c.data.playTime,
 		okg: $c.okgCount,
 		users: KKuTu.getUserList(),
@@ -537,6 +539,14 @@ function processClientRequest($c, msg) {
 			break;
 		case 'refresh':
 			$c.refresh();
+			break;
+		case 'updateProfile':
+			msg.id = $c.id;
+			delete msg.type;
+			$c.updateProfile(msg);
+			if(msg.nickname) DIC[$c.id].nickname = DIC[$c.id].profile.title = DIC[$c.id].profile.name = msg.nickname;
+			if(msg.exordial) DIC[$c.id].exordial = msg.exordial;
+			for(let i in DIC) DIC[i].send('updateUser', msg);
 			break;
 		case 'talk':
 			if (!msg.value) return;

@@ -23,6 +23,16 @@
 
 (function(){
 	$(document).ready(function(){
-		//볕뉘 수정 구문삭제(21~105)
+		$(document).bind('keydown',function(e){
+			if ( e.keyCode == 123 /* F12 */) {
+				e.preventDefault();
+				e.returnValue = false;
+			}
+		});
+	});
+	$(document).ready(function(){
+		$(document).on("contextmenu dragstart selectstart",function(e){
+			return false;
+		});
 	});
 })();

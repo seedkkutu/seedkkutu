@@ -44,6 +44,7 @@ exports.OPTIONS = {
 	'k32': { name: "Sami" },
 	'no2': { name: "No2" },
 	'rank': { name: "RankGame" }
+	/* 'jau': { name: "Jayu" } */
 };
 exports.MOREMI_PART = [ 'back', 'eye', 'mouth', 'shoes', 'clothes', 'head', 'lhand', 'rhand', 'front' ];
 exports.CATEGORIES = [ "all", "spec", "skin", "badge", "head", "eye", "mouth", "clothes", "hs", "back" ];
@@ -210,10 +211,10 @@ exports.KO_INJEONG = [
 	"KGR", "ESB", "ELW", "OIM", "OVW", "NEX", /*"WOW",*/
 	"YRY", "KPO", "JLN", "JAN", "ZEL", "POK", "HAI",
 	"HSS", "KMV", "HDC", "HOS", "KKT", "SKT", "BLU",
-	"COM", "WEB", /* 게임 관련 주제: "NEX", "NCG", "NEM" */
+	"COM", "WEB", "NEX", "NCG", "NEM", "RBX"
 ];
 exports.EN_INJEONG = [
-	"LOL"
+	"LOL" /* TODO: 영끄 주제 추기 , "COM" */
 ];
 exports.KO_THEME = [
 	"30", "40", "60", "80", "90",

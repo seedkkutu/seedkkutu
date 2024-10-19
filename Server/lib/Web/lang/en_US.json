@@ -3,7 +3,8 @@
 
 	"GLOBAL": {
 		"GPL": "<div style='color: #666;'>Rule the words! KKuTu Online Copyright (C) {year} {author}({email addr.})<br>This program comes with ABSOLUTELY NO WARRANTY.<br>This is free software, and you are welcome to redistribute it under certain conditions.<br>For details visit the repository of this software: <a target='_blank' href='{url of the source code of this server}'>{url of the source code of this server}</a></div>",
-
+		"IMGPL": "<div style='color: #666;'>씨앗끄투의 레벨 디자인은 끄투코리아에서 공개한 레포지토리에서 일부 발췌하여 사용중입니다. 해당 디자인은 끄투코리아의 소유로, 끄투코리아의 끄투 레포지토리를 확인하시길 바랍니다. <a target='_blank' href='https://github.com/Kim-Daewoon/KKuTu'>깃허브 링크</a>",
+		
 		"CREATOR":	"개발자 블로그",
 		"HOME":		"FA{home}",
 		"GAMES":	"게임",

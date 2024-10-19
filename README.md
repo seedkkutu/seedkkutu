@@ -57,6 +57,10 @@
 - 모든 이미지 및 소리에 대해: [크리에이티브 커먼즈 라이선스 CC BY](https://creativecommons.org/licenses/by/4.0/)
 	- 다만 본 레포지토리에서 제공하는 소스 코드로 끄투 서비스를 운영하기 위해 이들을 사용하는 경우 저작자 표시(BY)를 생략할 수 있습니다.
 
+### 필수 항목
+global.json의 WAF 설정은 기본으로 false로 설정되있습니다.
+클라우드플레어를 사용하시면 true로 변경, https 모듈의 의해 인증서가 필수이므로 SSL을 넣고 IsCA와 IsSecured을 true로 설정해주세요.
+
 ## English
 > Rule the words! KKuTu Online
 

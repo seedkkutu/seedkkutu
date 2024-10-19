@@ -486,6 +486,7 @@ function joinNewUser($c) {
 		nickname: $c.nickname,
 		exordial: $c.exordial,
 		playTime: $c.data.playTime,
+		rankPoint: $c.data.rankPoint,
 		okg: $c.okgCount,
 		users: KKuTu.getUserList(),
 		rooms: KKuTu.getRoomList(),

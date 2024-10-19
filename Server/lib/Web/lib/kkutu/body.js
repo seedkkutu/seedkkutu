@@ -903,6 +903,23 @@ function updateMe(){
 	var lv = getLevel(my.data.score);
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
+	var rank;
+
+	if(my.data.rankPoint < 50){
+		rank = 'UNRANKED';
+	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
+		rank = 'BRONZE';
+	} else if(my.data.rankPoint >= 500 && my.data.rankPoint < 1500){
+		rank = 'SILVER';
+	} else if(my.data.rankPoint >= 1500 && my.data.rankPoint < 2500){
+		rank = 'GOLD';
+	} else if(my.data.rankPoint >= 2500 && my.data.rankPoint < 3500){
+		rank = 'PLATINUM';
+	} else if(my.data.rankPoint >= 3500 && my.data.rankPoint < 5000){
+		rank = 'DIAMOND';
+	} else if(my.data.rankPoint >= 5000){
+		rank = 'MASTER';
+	}
 	
 	for(i in my.data.record) gw += my.data.record[i][1];
 	renderMoremi(".my-image", my.equip);
@@ -911,6 +928,8 @@ function updateMe(){
 	$(".my-stat-name").html(getDisplayName(my));
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-stat-ping").html(commify(my.money) + L['ping']);
+	$(".my-rank").html(L[rank]);
+	$(".my-rankPoint").html(my.data.rankPoint + L['LP']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
@@ -1576,6 +1595,8 @@ function requestProfile(id){
 	var $rec = $("#profile-record").empty();
 	var $pi, $ex;
 	var i;
+	var p = $data.users[id];
+	var rank;
 	
 	if(!o){
 		notice(L['error_405']);
@@ -1600,9 +1621,28 @@ function requestProfile(id){
 	if(o.robot){
 		$stage.dialog.profileLevel.show();
 		$stage.dialog.profileLevel.prop('disabled', $data.id != $data.room.master);
+		$("#rank").html(L['UNRANKED']);
+		$("#rankpoint").html(L['0LP']);
 		$("#profile-place").html($data.room.id + L['roomNumber']);
 	}else{
+		if(p.data.rankPoint < 50){
+			rank = 'UNRANKED';
+		} else if(p.data.rankPoint >= 50 && p.data.rankPoint < 500){
+			rank = 'BRONZE';
+		} else if(p.data.rankPoint >= 500 && p.data.rankPoint < 1500){
+			rank = 'SILVER';
+		} else if(p.data.rankPoint >= 1500 && p.data.rankPoint < 2500){
+			rank = 'GOLD';
+		} else if(p.data.rankPoint >= 2500 && p.data.rankPoint < 3500){
+			rank = 'PLATINUM';
+		} else if(p.data.rankPoint >= 3500 && p.data.rankPoint < 5000){
+			rank = 'DIAMOND';
+		} else if(p.data.rankPoint >= 5000){
+			rank = 'MASTER';
+		}
 		$stage.dialog.profileLevel.hide();
+		$("#rank").html(L[rank]);
+		$("#rankpoint").html(p.data.rankPoint + L['LP']);
 		$("#profile-place").html(o.place ? (o.place + L['roomNumber']) : L['lobby']);
 		for(i in o.data.record){
 			var r = o.data.record[i];
@@ -2056,7 +2096,7 @@ function roundEnd(result, data){
 			addp = "<label class='result-me-bonus'>(+" + commify(addp) + ")</label>";
 		}else addp = "";
 		
-		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money));
+		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
 		$(".result-me").css('opacity', 1);
 		$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
 		$(".result-me-money").html(L['moneyGain']+" +"+commify($data._result.reward.money)+addp);

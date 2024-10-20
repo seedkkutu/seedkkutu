@@ -219,10 +219,11 @@ exports.KO_INJEONG = [
 	"KGR", "ESB", "ELW", "OIM", "OVW", "NEX", /*"WOW",*/
 	"YRY", "KPO", "JLN", "JAN", "ZEL", "POK", "HAI",
 	"HSS", "KMV", "HDC", "HOS", "KKT", "SKT", "BLU",
-	"COM", "WEB", "NEX", "NCG", "NEM", "RBX"
+	"COM", "WEB", "NEX", "NCG", "NEM", "RBX", "CAR",
+	"MIS"/*, "EGG"*/
 ];
 exports.EN_INJEONG = [
-	"LOL" /* TODO: 영끄 주제 추기 , "COM" */
+	"LOL", "COM"
 ];
 exports.KO_THEME = [
 	"30", "40", "60", "80", "90",

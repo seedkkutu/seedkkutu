@@ -405,6 +405,12 @@
 		"theme_BLU": "블루 아카이브",
 		"theme_COM": "기업",
 		"theme_WEB": "웹사이트",
+		"theme_CAR": "카트라이더",
+		"theme_MIS": "특수 미션",
+		"theme_NEX": "넥슨",
+		"theme_NCG": "엔씨소프트",
+		"theme_NEM": "넷마블",
+		"theme_IDG": "인디 게임",
 		
 		"class_1": "명",
 		"class_2": "대명",

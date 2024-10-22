@@ -1,4 +1,4 @@
-# KKuTu
+# SeedKKuTu
 - Made by [JJoriping](http://blog.jjo.kr/)
 - Made SeedKKuTu by seedkkutu, mulmand0
 - Special thanks to
@@ -62,16 +62,16 @@ global.json의 WAF 설정은 기본으로 false로 설정되있습니다.
 클라우드플레어를 사용하시면 true로 변경, https 모듈의 의해 인증서가 필수이므로 SSL을 넣고 IsCA와 IsSecured을 true로 설정해주세요.
 
 ## English
-> Rule the words! KKuTu Online
+> Rule the words! SeedKKuTu Online
 
-**KKuTu** is a casual game containing various word games that let players use their vocabulary.
+**SeedKKuTu** is a casual game containing various word games that let players use their vocabulary.
 Players can play alone with a robot, or play with other players who have entered to a server.
 This repository provides you what you have to prepare to play **KKuTu**.
 
 ### How to Install
 #### For Windows
 1. Download or clone this repository to your machine.
-1. Install [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)(this will be installed automatically). The version should be ≥8.
+1. Install [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)(this will be installed automatically). The version should be 17.
 1. Open *cmd* and run `npm install -g grunt grunt-cli` to install [grunt](https://gruntjs.com/).
 1. Install [PostgreSQL](https://www.postgresql.org/) database server and *pgAdmin*(this will be installed automatically).
 1. Run *pgAdmin* and put the SQL file(`./db.sql`) into your database.
@@ -82,7 +82,7 @@ This repository provides you what you have to prepare to play **KKuTu**.
 
 #### For Linux
 1. Download or clone this repository to your machine.
-1. Install [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) via a package manager. The version should be ≥8.
+1. Install [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) via a package manager. The version should be 17.
 1. Run `npm install -g grunt grunt-cli` to install [grunt](https://gruntjs.com).
 1. Install [PostgreSQL](https://www.postgresql.org/) database server via a package manager.
 1. Put the SQL file(`./db.sql`) into your database.

@@ -1409,45 +1409,46 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	
 	// all은 1~8
 	// rank는 0~7
+	// TODO: 
 	switch(Const.GAME_TYPE[mode]){
 		case "EKT":
-			rw.score += score * 1.4;
+			rw.score += score * 1.2;
 			break;
 		case "ESH":
-			rw.score += score * 0.5;
-			break;
-		case "KKT":
-			rw.score += score * 1.42;
-			break;
-		case "KSH":
-			rw.score += score * 0.55;
-			break;
-		case "CSQ":
 			rw.score += score * 0.4;
 			break;
+		case "KKT":
+			rw.score += score * 1.6;
+			break;
+		case "KSH":
+			rw.score += score * 0.7;
+			break;
+		case "CSQ":
+			rw.score += score * 0.5;
+			break;
 		case 'KCW':
-			rw.score += score * 1.0;
+			rw.score += score * 1.13;
 			break;
 		case 'KTY':
-			rw.score += score * 0.3;
-			break;
-		case 'ETY':
 			rw.score += score * 0.37;
 			break;
+		case 'ETY':
+			rw.score += score * 0.27;
+			break;
 		case 'KAP':
-			rw.score += score * 0.8;
+			rw.score += score * 0.85;
 			break;
 		case 'HUN':
-			rw.score += score * 0.5;
-			break;
-		case 'KDA':
-			rw.score += score * 0.57;
-			break;
-		case 'EDA':
 			rw.score += score * 0.65;
 			break;
+		case 'KDA':
+			rw.score += score * 0.77;
+			break;
+		case 'EDA':
+			rw.score += score * 0.45;
+			break;
 		case 'KSS':
-			rw.score += score * 0.5;
+			rw.score += score * 0.7;
 			break;
 		case 'ESS':
 			rw.score += score * 0.22;

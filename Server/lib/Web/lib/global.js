@@ -78,7 +78,9 @@ var L;
 	};
 	$(document).ready(function(e){
 		const LANG = {
-			'ko_KR': "한국어"
+			'ko_KR': "한국어"/* TODO: 영어, 일본어 번역 ,
+   			'en_US': "English",
+      			'ja_JP': "日本語" */
 		};
 		var $gn = $("#global-notice").hide();
 		var $c;

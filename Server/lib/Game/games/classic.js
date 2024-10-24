@@ -170,6 +170,7 @@ exports.turnStart = function(force){
 		roundTime: my.game.roundTime,
 		turnTime: my.game.turnTime,
 		mission: my.game.mission,
+		jayu: my.game.jayu,
 		wordLength: my.game.wordLength,
 		seq: force ? my.game.seq : undefined
 	}, true);

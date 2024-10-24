@@ -53,7 +53,7 @@ const GUEST_PERMISSION = exports.GUEST_PERMISSION = {
 	'invite': true,
 	'inviteRes': true,
 	'kick': true,
-	'kickVote': true,
+	'kickVote': false,
 	'wp': true
 };
 const ENABLE_ROUND_TIME = exports.ENABLE_ROUND_TIME = [ 10, 30, 60, 90, 120, 150 ];

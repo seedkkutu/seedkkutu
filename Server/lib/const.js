@@ -92,14 +92,14 @@ exports.RULE = {
 		big: false,
 		ewq: true
 	},
-	/*'JAU': { lang: "ko",
-		rule: "JAU"
-		opts: [ "mis", "no2" ]
+	'JAU': { lang: "ko",
+		rule: "JAU",
+		opts: [ "mis", "no2" ],
 		time: 1,
 		ai: false,
-		big: false
+		big: false,
 		ewq: true
-	},*/
+	},
 	'KKT': { lang: "ko",
 		rule: "Classic",
 		opts: [ "man", "ext", "mis", "loa", "str", "k32", "rank" ],

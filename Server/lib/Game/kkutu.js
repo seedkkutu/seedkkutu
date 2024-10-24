@@ -1454,6 +1454,9 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	// rank는 0~7
 	// TODO: 
 	switch(Const.GAME_TYPE[mode]){
+		case "JAU":
+			rw.score += score * 0.2;
+			break;
 		case "EKT":
 			rw.score += score * 1.2;
 			break;

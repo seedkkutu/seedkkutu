@@ -26,16 +26,6 @@ module.exports.strategy = (process, MainDB, Ajae) => {
         $p.title = profile.displayName;
         $p.image = "https://graph.facebook.com/"+profile.id+"/picture";
 
-        /* 망할 셧다운제
-        
-        $p._age = profile.age_range;
-        if(profile.birthday){
-            $p.birth = doc.birthday.split('/').map(Number);
-        }
-        $p.isAjae = Ajae($p.birth, $p._age);
-        */
-        // $p.sex = profile.gender;
-    
         process(req, accessToken, MainDB, $p, done);
     }
 }

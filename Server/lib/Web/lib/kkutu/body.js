@@ -295,6 +295,15 @@ function onMessage(data){
 				chat(data.profile || { title: L['robot'] }, data.value, data.from, data.timestamp);
 			}
 			break;
+		case 'drawCanvas':
+			if ($stage.game.canvas) {
+				drawCanvas(data);
+				}
+			break;
+		case 'diffNotValid':
+			if ($stage.game.canvas) {
+				diffNotValid(data);
+			}
 		case 'roomStuck':
 			rws.close();
 			break;
@@ -1974,9 +1983,12 @@ function clearBoard(){
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
 	$(".jjoriping,.rounds,.game-body").removeClass("cw");
+	$('.jjoriping,.rounds').removeClass('dg')
+	$('.rounds').removeClass('painter')
 	$stage.game.display.empty();
 	$stage.game.chain.hide();
 	$stage.game.hints.empty().hide();
+	$stage.game.tools.hide();
 	$stage.game.cwcmd.hide();
 	$stage.game.bb.hide();
 	$stage.game.round.empty();
@@ -2040,6 +2052,7 @@ function roundEnd(result, data){
 	$stage.game.display.html(L['roundEnd']);
 	$data._resultPage = 1;
 	$data._result = null;
+	$data._relay = false
 	for(i in result){
 		r = result[i];
 		if($data._replay){
@@ -2791,6 +2804,12 @@ function chat(profile, msg, from, timestamp){
 	}
 	addonNickname($bar, { equip: equip });
 	$stage.chat.scrollTop(999999999);
+}
+function drawCanvas (data) {
+	route('drawCanvas', data);
+}
+function diffNotValid(data) {
+	route('diffNotValid', data);
 }
 function notice(msg, head){
 	var time = new Date();

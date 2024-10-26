@@ -287,14 +287,10 @@ exports.Client = function(socket, profile, sid){
 	});
 	socket.on('message', function(msg){
 		var data, room = ROOM[my.place];
-<<<<<<< HEAD
 		if(!my) return;
 		if(!msg) return;
 		
 		JLog.log(`Chan @${channel} Msg #${my.id}: ${msg}`);
-=======
-
->>>>>>> pr/DrawQuiz
 		try{ data = JSON.parse(msg); }catch(e){ data = { error: 400 }; }
 
 		JLog.log(`Chan @${channel} Msg #${my.id}: ${data.type == 'drawingCanvas' ? JSON.stringify({type: data.type, diffed: data.diffed}) : msg}`);

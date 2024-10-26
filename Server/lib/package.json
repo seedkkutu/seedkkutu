@@ -37,15 +37,11 @@
     "passport-twitter": "^1.0.4",
     "pg": "^8.0.3",
     "pg-escape": "^0.2.0",
-<<<<<<< HEAD
     "pug": "^2.0.4",
     "request": "^2.88.2",
     "ws": "^3.3.1"
   },
-  "license": "GPL-3.0"
-=======
+  "license": "GPL-3.0",
     "pug": "^2.0.0-beta6",
     "ws": "^1.1.5"
   }
->>>>>>> pr/DrawQuiz
-}

@@ -45,7 +45,11 @@ var $stage;
 var $sound = {};
 var $_sound = {}; // 현재 재생 중인 것들
 var $data = {};
+<<<<<<< HEAD
 var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {} };
+=======
+var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {} };
+>>>>>>> pr/DrawQuiz
 var $rec;
 var mobile;
 
@@ -72,15 +76,24 @@ var _setTimeout = setTimeout;
  */
 
 $(document).ready(function(){
+<<<<<<< HEAD
+=======
+	window.differ = new diff_match_patch()
+
+>>>>>>> pr/DrawQuiz
 	var i;
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
+<<<<<<< HEAD
 	$data.ROOM_PORT = $("#ROOM_PORT").html();
 	$data.version = $("#version").html();
 	$data.NICKNAME_LIMIT = JSON.parse($("#NICKNAME_LIMIT").text());
 	$data.NICKNAME_LIMIT.REGEX.unshift(null);
 	$data.NICKNAME_LIMIT.REGEX = new (Function.prototype.bind.apply(RegExp, $data.NICKNAME_LIMIT.REGEX));
+=======
+	$data.version = $("#version").html();
+>>>>>>> pr/DrawQuiz
 	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
 	$data.shop = {};
 	$data._okg = 0;
@@ -202,6 +215,12 @@ $(document).ready(function(){
 		game: {
 			display: $(".jjo-display"),
 			hints: $(".GameBox .hints"),
+<<<<<<< HEAD
+=======
+			tools: $('.GameBox .tools'),
+			drawingTitle: $('#drawing-title'),
+			themeisTitle: $('#themeis-title'),
+>>>>>>> pr/DrawQuiz
 			cwcmd: $(".GameBox .cwcmd"),
 			bb: $(".GameBox .bb"),
 			items: $(".GameBox .items"),
@@ -340,8 +359,13 @@ $(document).ready(function(){
 		var value = (mobile && $stage.game.here.is(':visible'))
 			? $stage.game.hereText.val()
 			: $stage.talk.val();
+<<<<<<< HEAD
 		if(!value) return;
 		var o = { value: value.trim() };
+=======
+		var o = { value: value };
+		if(!value) return;
+>>>>>>> pr/DrawQuiz
 		if(o.value[0] == "/"){
 			o.cmd = o.value.split(" ");
 			runCommand(o.cmd);
@@ -845,6 +869,7 @@ $(document).ready(function(){
 		});
 	});
 	$stage.dialog.dressOK.on('click', function(e){
+<<<<<<< HEAD
 		const data = {};
 
 		$(e.currentTarget).attr('disabled', true);
@@ -872,6 +897,15 @@ $(document).ready(function(){
 		});
 		$stage.dialog.dressOK.attr("disabled", false);
 		$stage.dialog.dress.hide();
+=======
+		$(e.currentTarget).attr('disabled', true);
+		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
+			$stage.dialog.dressOK.attr('disabled', false);
+			if(res.error) return fail(res.error);
+			
+			$stage.dialog.dress.hide();
+		});
+>>>>>>> pr/DrawQuiz
 	});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
@@ -1787,6 +1821,275 @@ $lib.Daneo.turnEnd = function(id, data){
 /**
  * Rule the words! KKuTu Online
  * Copyright (C) 2017 JJoriping(op@jjo.kr)
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.Drawing.roundReady = function (data, spec) {
+  var tv = L['jqTheme'] + ': ' + L['theme_' + data.theme]
+
+  clearBoard()
+  $('.jjoriping,.rounds,.game-body').addClass('cw')
+  $('.jjoriping,.rounds').addClass('dg')
+  $('.game-user-drawing').removeClass('game-user-drawing')
+  $stage.game.tools.hide()
+  $data._relay = false
+  $data._roundTime = $data.room.time * 1000
+  $data._fastTime = 10000
+  $data._fullImageString = ""
+  $stage.game.items.hide()
+  $stage.game.hints.show()
+  $stage.game.cwcmd.show().css('opacity', 0)
+  if ($data.id === data.painter) {
+    console.log('i\'m painter!')
+    $data._isPainter = true
+  } else {
+    $data._isPainter = false
+  }
+  $('#game-user-' + data.painter).addClass('game-user-drawing')
+  drawRound(data.round)
+  playSound('round_start')
+  clearInterval($data._tTime)
+}
+$lib.Drawing.turnStart = function (data, spec) {
+  $('.game-user-current').removeClass('game-user-current')
+  $('.game-user-bomb').removeClass('game-user-bomb')
+  if ($data.room.game.seq.indexOf($data.id) >= 0) {
+    if (!$data._isPainter) {
+      $stage.game.hints.show()
+      $stage.game.tools.hide()
+
+      $data._relay = true
+    } else {
+      $('#drawing-line-width').change(function () {
+        console.log(this.value)
+        $stage.game.canvas.freeDrawingBrush.width = this.value
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('#drawing-color').change(function () {
+        console.log(this.value)
+        $stage.game.canvas.freeDrawingBrush.color = this.value
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('#drawing-clear').click(function () {
+        console.log('clear')
+        $stage.game.canvas.clear()
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-red').click(function() {
+        console.log('change red')
+        $stage.game.canvas.freeDrawingBrush.color = '#FF0000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-orange').click(function() {
+        console.log('change orange')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFA500'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-yellow').click(function() {
+        console.log('change yellow')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFFF00'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-green').click(function() {
+        console.log('change green')
+        $stage.game.canvas.freeDrawingBrush.color = '#008000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-blue').click(function() {
+        console.log('change blue')
+        $stage.game.canvas.freeDrawingBrush.color = '#0000FF'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-indigo').click(function() {
+        console.log('change indigo')
+        $stage.game.canvas.freeDrawingBrush.color = '#4B0082'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-violet').click(function() {
+        console.log('change red')
+        $stage.game.canvas.freeDrawingBrush.color = '#9400D3'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-black').click(function() {
+        console.log('change black')
+        $stage.game.canvas.freeDrawingBrush.color = '#000000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-white').click(function() {
+        console.log('change white')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFFFFF'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+
+      $stage.game.drawingTitle.text(data.word)
+      $stage.game.themeisTitle.text(L['theme_' + data.theme])
+
+      $stage.game.hints.hide()
+      $stage.game.tools.show()
+
+      $('.rounds').removeClass('dg')
+      $('.rounds').addClass('painter')
+    }
+  }
+  $lib.Drawing.drawDisplay()
+  clearInterval($data._tTime)
+  $data._tTime = addInterval(turnGoing, TICK)
+  playBGM('jaqwi')
+}
+$lib.Drawing.turnHint = function (data) {
+  var hint
+  if (Array.isArray(data.hint)) {
+    hint = L['theme_' + data.hint[0]]
+  } else {
+    hint = data.hint
+  }
+  playSound('mission')
+  pushHint(hint)
+}
+$lib.Drawing.turnEnd = function (id, data) {
+  var $sc = $('<div>').addClass('deltaScore').html('+' + data.score)
+  var $uc = $('#game-user-' + id)
+
+  if (data.giveup) {
+    $uc.addClass('game-user-bomb')
+    $data._relay = false
+  } else if (data.answer) {
+    $stage.game.here.hide()
+    $stage.game.display.html($('<label>').css('color', '#FFFF44').html(data.answer))
+    stopBGM()
+    playSound('horr')
+    $data._relay = false
+  } else {
+    // if(data.mean) turnHint(data);
+    if (id == $data.id) $stage.game.here.hide()
+    addScore(id, data.score)
+    if ($data._roundTime > 10000) $data._roundTime = 10000
+    drawObtainedScore($uc, $sc)
+    updateScore(id, getScore(id)).addClass('game-user-current')
+    playSound('success')
+  }
+}
+$lib.Drawing.drawDisplay = function () {
+  var $pane = $stage.game.display.empty()
+
+  $pane.append($('<canvas>')
+    .attr('id', 'canvas')
+    .css({
+      width: '300',
+      height: '300',
+      left: 0,
+      top: 0
+    })
+    .addClass('canvas')
+  )
+
+  var canvas = window._canvas = new fabric.Canvas('canvas')
+  canvas.backgroundColor = '#ffffff'
+  canvas.isDrawingMode = $data._isPainter
+  canvas.setHeight(300)
+  canvas.setWidth(300)
+  canvas.selection = false
+
+  $('#drawing-line-width').val(20)
+  $('#drawing-color').val('#000000')
+
+  if ($data._isPainter) {
+    canvas.on('mouse:up', function (e) {
+      // $data._fullImageString -> old canvas data
+      var canvasStr = JSON.stringify(canvas)
+      var diffRes= window.differ.patch_make($data._fullImageString, canvasStr)
+      diffRes = window.differ.patch_toText(diffRes)
+
+      // { type: "drawingCanvas", diffed: Boolean, data: String }
+      send('drawingCanvas', {diffed: true, data: diffRes}, false)
+      $data._fullImageString = canvasStr
+    })
+  }
+  canvas.renderAll()
+  $stage.game.canvas = canvas
+}
+$lib.Drawing.turnGoing = function () {
+  var $rtb = $stage.game.roundBar
+  var bRate
+  var tt
+
+  if (!$data.room) clearInterval($data._tTime)
+  $data._roundTime -= TICK
+
+  tt = $data._spectate ? L['stat_spectate'] : ($data._roundTime * 0.001).toFixed(1) + L['SECOND']
+  $rtb
+    .width($data._roundTime / $data.room.time * 0.1 + '%')
+    .html(tt)
+
+  if (!$rtb.hasClass('round-extreme')) {
+    if ($data._roundTime <= $data._fastTime) {
+      bRate = $data.bgm.currentTime / $data.bgm.duration
+      if ($data.bgm.paused) stopBGM()
+      else playBGM('jaqwiF')
+      $data.bgm.currentTime = $data.bgm.duration * bRate
+      $rtb.addClass('round-extreme')
+    }
+  }
+}
+$lib.Drawing.drawCanvas = function (msg) {
+  // { type: "drawCanvas", diffed: Boolean, data: String }
+  if (!$data._isPainter) {
+    var data = ""
+    if(msg.diffed) {
+      var diff = window.differ.patch_fromText(msg.data)
+			var diffResult = window.differ.patch_apply(diff, $data._fullImageString)
+
+			if(diffResult[1]) {
+				data = diffResult[0]
+			} else {
+				send('canvasNotValid', {}, false)
+			}
+    } else {
+      data = msg.data
+    }
+
+    $stage.game.canvas.clear()
+    $stage.game.canvas.loadFromJSON(data, $stage.game.canvas.renderAll.bind($stage.game.canvas))
+    $data._fullImageString = data
+  }
+}
+
+$lib.Drawing.diffNotValid = function (msg) {
+  // msg -> {}
+  if ($data._isPainter) {
+    send('drawingCanvas', {diffed: false, data: $data._fullImageString}, false)
+  }
+}
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+>>>>>>> pr/DrawQuiz
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2043,7 +2346,11 @@ function route(func, a0, a1, a2, a3, a4){
 }
 function connectToRoom(chan, rid){
 	var url = $data.URL.replace(/:(\d+)/, function(v, p1){
+<<<<<<< HEAD
 		return ":" + $data.ROOM_PORT || (Number(p1) + 416 + Number(chan) - 1);
+=======
+		return ":" + (Number(p1) + 416 + Number(chan) - 1);
+>>>>>>> pr/DrawQuiz
 	}) + "&" + chan + "&" + rid;
 	
 	if(rws) return;
@@ -2133,8 +2440,11 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
+<<<<<<< HEAD
 			$data.nickname = data.nickname;
 			$data.exordial = data.exordial;
+=======
+>>>>>>> pr/DrawQuiz
 			$data.box = data.box;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
@@ -2162,7 +2472,11 @@ function onMessage(data){
 			$target = $data.usersR[data.user.id] = data.user;
 			
 			if($target.id == $data.id) loading();
+<<<<<<< HEAD
 			else notice(getDisplayName($target) + L['hasJoined']);
+=======
+			else notice(($target.profile.title || $target.profile.name) + L['hasJoined']);
+>>>>>>> pr/DrawQuiz
 			updateUserList();
 			break;
 		case 'disconnRoom':
@@ -2170,7 +2484,11 @@ function onMessage(data){
 			
 			if($target){
 				delete $data.usersR[data.id];
+<<<<<<< HEAD
 				notice(getDisplayName($target) + L['hasLeft']);
+=======
+				notice(($target.profile.title || $target.profile.name) + L['hasLeft']);
+>>>>>>> pr/DrawQuiz
 				updateUserList();
 			}
 			break;
@@ -2192,6 +2510,18 @@ function onMessage(data){
 				chat(data.profile || { title: L['robot'] }, data.value, data.from, data.timestamp);
 			}
 			break;
+<<<<<<< HEAD
+=======
+		case 'drawCanvas':
+			if ($stage.game.canvas) {
+				drawCanvas(data);
+			}
+			break;
+		case 'diffNotValid':
+			if ($stage.game.canvas) {
+				diffNotValid(data);
+			}
+>>>>>>> pr/DrawQuiz
 		case 'roomStuck':
 			rws.close();
 			break;
@@ -2210,6 +2540,7 @@ function onMessage(data){
 				if($data._rTime != $data.room.time) animModified('.room-head-time');
 			}
 			break;
+<<<<<<< HEAD
 		case 'updateUser':
 			if(data.nickname) $data.users[data.id].nickname = $data.users[data.id].profile.title = $data.users[data.id].profile.name = data.nickname;
 			if(data.exordial) $data.users[data.id].exordial = data.exordial;
@@ -2218,6 +2549,9 @@ function onMessage(data){
 			break;
 		case 'user':
 			delete data.type;
+=======
+		case 'user':
+>>>>>>> pr/DrawQuiz
 			$data.setUser(data.id, data);
 			if($data.room) updateUI($data.room.id == data.place);
 			break;
@@ -2304,7 +2638,11 @@ function onMessage(data){
 			if($data.id != data.target && $data.id != $data.room.master){
 				kickVoting(data.target);
 			}
+<<<<<<< HEAD
 			notice(getDisplayName($data._kickTarget) + L['kickVoting']);
+=======
+			notice(($data._kickTarget.profile.title || $data._kickTarget.profile.name) + L['kickVoting']);
+>>>>>>> pr/DrawQuiz
 			break;
 		case 'kickDeny':
 			notice(getKickText($data._kickTarget.profile, data));
@@ -2317,7 +2655,11 @@ function onMessage(data){
 			break;
 		case 'inviteNo':
 			$target = $data.users[data.target];
+<<<<<<< HEAD
 			notice(getDisplayName($target) + L['inviteDenied']);
+=======
+			notice(($target.profile.title || $target.profile.name) + L['inviteDenied']);
+>>>>>>> pr/DrawQuiz
 			break;
 		case 'okg':
 			if($data._playTime > data.time){
@@ -2401,6 +2743,7 @@ function onMessage(data){
 					alert("생년월일이 올바르게 입력되지 않아 게임 이용이 제한되었습니다. 잠시 후 다시 시도해 주세요.");
 					break;
 				}
+<<<<<<< HEAD
 			/* Enhanced User Block System [S] */
 				if(!data.blockedUntil) break;
 				
@@ -2421,13 +2764,18 @@ function onMessage(data){
 				alert("[#446] " + L['error_446'] + i + block);
 				break;
 			/* Enhanced User Block System [E] */
+=======
+>>>>>>> pr/DrawQuiz
 			} else if (data.code === 447) {
 				alert("자동화 봇 방지를 위한 캡챠 인증에 실패했습니다. 메인 화면에서 다시 시도해 주세요.");
 				break;
 			}
 			alert("[#" + data.code + "] " + L['error_'+data.code] + i);
 			break;
+<<<<<<< HEAD
 		case 'maintainConnection':
+=======
+>>>>>>> pr/DrawQuiz
 		default:
 			break;
 	}
@@ -2512,7 +2860,11 @@ function runCommand(cmd){
 				c = 0;
 				cmd[1] = cmd.slice(1).join(' ');
 				for(i in $data.users){
+<<<<<<< HEAD
 					if(getDisplayName($data.users[i]) == cmd[1]){
+=======
+					if(($data.users[i].profile.title || $data.users[i].profile.name) == cmd[1]){
+>>>>>>> pr/DrawQuiz
 						notice("[" + (++c) + "] " + i);
 					}
 				}
@@ -2789,7 +3141,11 @@ function checkRoom(modify){
 	}
 	if($data._master != $data.room.master){
 		u = $data.users[$data.room.master];
+<<<<<<< HEAD
 		notice(getDisplayName(u) + L['hasMaster']);
+=======
+		notice((u.profile.title || u.profile.name) + L['hasMaster']);
+>>>>>>> pr/DrawQuiz
 	}
 	$data._players = $data.room.players.toString();
 	$data._master = $data.room.master;
@@ -2806,7 +3162,11 @@ function updateMe(){
 	renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
+<<<<<<< HEAD
 	$(".my-stat-name").html(getDisplayName(my));
+=======
+	$(".my-stat-name").html(my.profile.title || my.profile.name);
+>>>>>>> pr/DrawQuiz
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-stat-ping").html(commify(my.money) + L['ping']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
@@ -2870,7 +3230,11 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+<<<<<<< HEAD
 		.append($("<div>").addClass("users-name").html(getDisplayName(o)))
+=======
+		.append($("<div>").addClass("users-name").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
 		});
@@ -2879,7 +3243,11 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+<<<<<<< HEAD
 		.append($("<div>").addClass("users-name ellipse").html(getDisplayName(o)))
+=======
+		.append($("<div>").addClass("users-name ellipse").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
 		});
@@ -2948,7 +3316,11 @@ function normalGameUserBar(o){
 		.append($m = $("<div>").addClass("moremi game-user-image"))
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
+<<<<<<< HEAD
 			.append($bar = $("<div>").addClass("game-user-name ellipse").html(getDisplayName(o)))
+=======
+			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 			.append($("<div>").addClass("expl").html(L['LEVEL'] + " " + getLevel(o.data.score)))
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
@@ -2964,7 +3336,11 @@ function miniGameUserBar(o){
 	var $R = $("<div>").attr('id', "game-user-"+o.id).addClass("game-user")
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
+<<<<<<< HEAD
 			.append($bar = $("<div>").addClass("game-user-name ellipse").html(getDisplayName(o)))
+=======
+			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
 	if(o.id == $data.id) $bar.addClass("game-user-my-name");
@@ -3032,7 +3408,11 @@ function updateRoom(gaming){
 				)
 				.append($("<div>").addClass("room-user-title")
 					.append(getLevelImage(o.data.score).addClass("room-user-level"))
+<<<<<<< HEAD
 					.append($bar = $("<div>").addClass("room-user-name").html(getDisplayName(o)))
+=======
+					.append($bar = $("<div>").addClass("room-user-name").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 				).on('click', function(e){
 					requestProfile($(e.currentTarget).attr('id').slice(10));
 				})
@@ -3156,7 +3536,10 @@ function drawMyDress(avGroup){
 	renderMoremi($view, my.equip);
 	$(".dress-type.selected").removeClass("selected");
 	$("#dress-type-all").addClass("selected");
+<<<<<<< HEAD
 	$("#dress-nickname").val(my.nickname);
+=======
+>>>>>>> pr/DrawQuiz
 	$("#dress-exordial").val(my.exordial);
 	drawMyGoods(avGroup || true);
 }
@@ -3457,7 +3840,11 @@ function requestRoomInfo(id){
 		
 		$pls.append($("<div>").addClass("ri-player")
 			.append($moremi = $("<div>").addClass("moremi rip-moremi"))
+<<<<<<< HEAD
 			.append($p = $("<div>").addClass("ellipse rip-title").html(getDisplayName(p)))
+=======
+			.append($p = $("<div>").addClass("ellipse rip-title").html(p.profile.title || p.profile.name))
+>>>>>>> pr/DrawQuiz
 			.append($("<div>").addClass("rip-team team-" + rd.t).html($("#team-" + rd.t).html()))
 			.append($("<div>").addClass("rip-form").html(L['pform_' + rd.f]))
 		);
@@ -3479,11 +3866,19 @@ function requestProfile(id){
 		notice(L['error_405']);
 		return;
 	}
+<<<<<<< HEAD
 	$("#ProfileDiag .dialog-title").html(getDisplayName(o) + L['sProfile']);
 	$(".profile-head").empty().append($pi = $("<div>").addClass("moremi profile-moremi"))
 		.append($("<div>").addClass("profile-head-item")
 			.append(getImage(o.profile.image).addClass("profile-image"))
 			.append($("<div>").addClass("profile-title ellipse").html(getDisplayName(o))
+=======
+	$("#ProfileDiag .dialog-title").html((o.profile.title || o.profile.name) + L['sProfile']);
+	$(".profile-head").empty().append($pi = $("<div>").addClass("moremi profile-moremi"))
+		.append($("<div>").addClass("profile-head-item")
+			.append(getImage(o.profile.image).addClass("profile-image"))
+			.append($("<div>").addClass("profile-title ellipse").html(o.profile.title || o.profile.name)
+>>>>>>> pr/DrawQuiz
 				.append($("<label>").addClass("profile-tag").html(" #" + o.id.toString().substr(0, 5)))
 			)
 		)
@@ -3539,7 +3934,11 @@ function requestInvite(id){
 	var nick;
 	
 	if(id != "AI"){
+<<<<<<< HEAD
 		nick = getDisplayName($data.users[id]);
+=======
+		nick = $data.users[id].profile.title || $data.users[id].profile.name;
+>>>>>>> pr/DrawQuiz
 		if(!confirm(nick + L['sureInvite'])) return;
 	}
 	send('invite', { target: id });
@@ -3830,9 +4229,18 @@ function clearBoard(){
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
 	$(".jjoriping,.rounds,.game-body").removeClass("cw");
+<<<<<<< HEAD
 	$stage.game.display.empty();
 	$stage.game.chain.hide();
 	$stage.game.hints.empty().hide();
+=======
+	$('.jjoriping,.rounds').removeClass('dg')
+	$('.rounds').removeClass('painter')
+	$stage.game.display.empty();
+	$stage.game.chain.hide();
+	$stage.game.hints.empty().hide();
+	$stage.game.tools.hide();
+>>>>>>> pr/DrawQuiz
 	$stage.game.cwcmd.hide();
 	$stage.game.bb.hide();
 	$stage.game.round.empty();
@@ -3896,6 +4304,10 @@ function roundEnd(result, data){
 	$stage.game.display.html(L['roundEnd']);
 	$data._resultPage = 1;
 	$data._result = null;
+<<<<<<< HEAD
+=======
+	$data._relay = false
+>>>>>>> pr/DrawQuiz
 	for(i in result){
 		r = result[i];
 		if($data._replay){
@@ -3915,7 +4327,11 @@ function roundEnd(result, data){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($p = $("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(sc).addClass("result-board-level"))
+<<<<<<< HEAD
 			.append($("<div>").addClass("result-board-name").html(getDisplayName(o)))
+=======
+			.append($("<div>").addClass("result-board-name").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 			.append($("<div>").addClass("result-board-score")
 				.html(data.scores ? (L['avg'] + " " + commify(data.scores[r.id]) + L['kpm']) : (commify(r.score || 0) + L['PTS']))
 			)
@@ -4053,7 +4469,11 @@ function drawRanking(ranks){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(r.score).addClass("result-board-level"))
+<<<<<<< HEAD
 			.append($("<div>").addClass("result-board-name").html(getDisplayName(o)))
+=======
+			.append($("<div>").addClass("result-board-name").html(o.profile.title || o.profile.name))
+>>>>>>> pr/DrawQuiz
 			.append($("<div>").addClass("result-board-score").html(commify(r.score) + L['PTS']))
 			.append($("<div>").addClass("result-board-reward").html(""))
 			.append($v = $("<div>").addClass("result-board-lvup").css('display', me ? "block" : "none")
@@ -4644,6 +5064,15 @@ function chat(profile, msg, from, timestamp){
 	addonNickname($bar, { equip: equip });
 	$stage.chat.scrollTop(999999999);
 }
+<<<<<<< HEAD
+=======
+function drawCanvas (data) {
+	route('drawCanvas', data);
+}
+function diffNotValid(data) {
+	route('diffNotValid', data);
+}
+>>>>>>> pr/DrawQuiz
 function notice(msg, head){
 	var time = new Date();
 	
@@ -4749,9 +5178,12 @@ function drawObtain(data){
 	$("#obtain-image").css('background-image', "url(" + iImage(data.key) + ")");
 	$("#obtain-name").html(iName(data.key));
 }
+<<<<<<< HEAD
 function getDisplayName(user){
 	return user.nickname || user.profile.title || user.profile.name;
 }
+=======
+>>>>>>> pr/DrawQuiz
 function renderMoremi(target, equip){
 	var $obj = $(target).empty();
 	var LR = { 'Mlhand': "Mhand", 'Mrhand': "Mhand" };

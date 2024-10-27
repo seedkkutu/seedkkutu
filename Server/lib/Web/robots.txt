@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /
+Disallow: /gwalli
+Allow: /terms.html
+Allow: /private.html
+Allow: /ads.txt
+Disallow: /o/

@@ -1457,53 +1457,61 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	// TODO: 
 	switch(Const.GAME_TYPE[mode]){
 		case "EKT":
-			rw.score += score * 1.2;
+			rw.score += score * 0.75;
 			break;
 		case "ESH":
-			rw.score += score * 0.4;
+			rw.score += score * 0.32;
 			break;
 		case "KKT":
-			rw.score += score * 1.6;
+			rw.score += score * 1.3;
 			break;
 		case "KSH":
-			rw.score += score * 0.7;
+			rw.score += score * 0.9;
 			break;
 		case "CSQ":
-			rw.score += score * 0.5;
-			break;
-		case 'KCW':
-			rw.score += score * 1.13;
-			break;
-		case 'KTY':
-			rw.score += score * 0.37;
-			break;
-		case 'ETY':
-			rw.score += score * 0.27;
-			break;
-		case 'KAP':
-			rw.score += score * 0.85;
-			break;
-		case 'HUN':
-			rw.score += score * 0.65;
-			break;
-		case 'KDA':
-			rw.score += score * 0.77;
-			break;
-		case 'EDA':
-			rw.score += score * 0.45;
-			break;
-		case 'KSS':
 			rw.score += score * 0.7;
 			break;
+		case 'KCW':
+			rw.score += score * 1.3;
+			break;
+		case 'KTY':
+			rw.score += score * 0.5;
+			break;
+		case 'ETY':
+			rw.score += score * 0.14;
+			break;
+		case 'KAP':
+			rw.score += score * 0.95;
+			break;
+		case 'HUN':
+			rw.score += score * 0.75;
+			break;
+		case 'KDA':
+			rw.score += score * 0.67;
+			break;
+		case 'EDA':
+			rw.score += score * 0.33;
+			break;
+		case 'KSS':
+			rw.score += score * 0.85;
+			break;
 		case 'ESS':
-			rw.score += score * 0.22;
+			rw.score += score * 0.15;
 			break;
 		case 'KDG':
-			rw.score += score * 0.57;
+			rw.score += score * 0.97;
 			break;
 		case 'EDG':
-			rw.score += score * 0.57;
+			rw.score += score * 0.47;
 			break;
+		/* TODO: 한국어 끝말잇기 설정 자유 말고 한국어 자유, 영어 자유도 만들기
+		// 이온화 끄투 패치
+  		case 'KJU':
+    			rw.score += score * 0.13;
+			break;
+   		case 'EJU'
+     			rw.score += score + 0.10;
+			break; */
 		default:
 			break;
 	}
@@ -1518,9 +1526,16 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	}else{
 		rw.together = true;
 	}
+
 	rw.score += bonus;
 	rw.score = rw.score || 0;
 	rw.money = rw.money || 0;
+
+	// 이온화 끄투 패치
+	if (opts.jayu){ // 모드 <- 자유임
+		rw.siucore = rw.score // 아마 이거 없어도 정상작동 할 듯
+		rw.score = rw.siucore * 0.2 // 위에거 없애면 rw.score * 0.2 로 수정 필요
+		rw.money = 0.7 + rw.score * 0.03; // 돈 받는거도 너프해야지
 
 	if (opts.rankgame){ //랭크게임 이라면
 		rw.rankPoint = rw.score * 0.1 //점수에 0.1를 곱하고

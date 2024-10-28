@@ -127,14 +127,14 @@
 	"loginfail": {
 		"title": "Login Failed",
 		"description": "Login Failed. Please Try Again",
-		"login": "Login",
+		"login": "Login"
 	},
 	"kkutu": {
 		"title": "Seedkkutu",
 		"version": "3.0.0",
 		
 		"meta_desc": "온라인 끝말잇기, 앞말잇기, 자음퀴즈, 십자말풀이, 타자 대결까지! 끄투에서 어휘력의 제왕이 되어 보세요.",
-		"meta_keys": "끄투,kkutu,끝말잇기,온라인,웹,쿵쿵따,영어끝말잇기,영어쿵쿵따,시리토리,끝말잇기사이트,자음퀴즈,초성퀴즈,자퀴,십자말풀이,가로세로,타자,타자연습,앞말잇기",",
+		"meta_keys": "끄투,kkutu,끝말잇기,온라인,웹,쿵쿵따,영어끝말잇기,영어쿵쿵따,시리토리,끝말잇기사이트,자음퀴즈,초성퀴즈,자퀴,십자말풀이,가로세로,타자,타자연습,앞말잇기",
 		
 		"gameStart": "Game Start!",
 		"serverList": "Server list",
@@ -206,7 +206,7 @@
 		"error_454": "Waiting for a response to the friend request.",
 		"error_455": "You can only delete friends who are not online.",
 		"error_500": "The server is under maintenance or update.",
-		"error_555": "Under construction! :("
+		"error_555": "Under construction! :(",
 		"turnError_402": "First Turn One-shot Prohibited",
 		"turnError_403": "One-shot Word",
 		"turnError_405": "Loanword",
@@ -347,7 +347,7 @@
 		"drawingClear": "New Canvas",
 		"wordis": "The word to express: ",
 		"themeis": "The theme of the word: ",
-		"kpm": "<label style='font-size: 11px;'>Keys/Min</label>"
+		"kpm": "<label style='font-size: 11px;'>Keys/Min</label>",
 
 		"theme_IMS": "THE iDOLM@STER",
 		"theme_VOC": "VOCALOID",

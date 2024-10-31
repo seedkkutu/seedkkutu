@@ -21,8 +21,7 @@ var Cluster = require("cluster");
 var Const = require('../const');
 var Lizard = require('../sub/lizard');
 var JLog = require('../sub/jjlog');
-const DiffMatchPatch = require("diff-match-patch")
-// 망할 셧다운제 var Ajae = require("../sub/ajae");
+const DiffMatchPatch = require("diff-match-patch");
 var DB;
 var SHOP;
 var DIC;
@@ -50,7 +49,6 @@ exports.init = function(_DB, _DIC, _ROOM, _GUEST_PERMISSION, _CHAN){
 	GUEST_PERMISSION = _GUEST_PERMISSION;
 	CHAN = _CHAN;
 	_rid = 100;
-	// 망할 셧다운제 if(Cluster.isMaster) setInterval(exports.processAjae, 60000);
 	DB.kkutu_shop.find().on(function($shop){
 		SHOP = {};
 		
@@ -65,21 +63,6 @@ exports.init = function(_DB, _DIC, _ROOM, _GUEST_PERMISSION, _CHAN){
 		Rule[k].init(DB, DIC);
 	}
 };
-/* 망할 셧다운제
-exports.processAjae = function(){
-	var i;
-	
-	exports.NIGHT = (new Date()).getHours() < 6;
-	if(exports.NIGHT){
-		for(i in DIC){
-			if(!DIC[i].isAjae){
-				DIC[i].sendError(440);
-				DIC[i].socket.close();
-			}
-		}
-	}
-};
-*/
 exports.getUserList = function(){
 	var i, res = {};
 	
@@ -218,17 +201,6 @@ exports.Client = function(socket, profile, sid){
 	if(profile){
 		my.id = profile.id;
 		my.profile = profile;
-		/* 망할 셧다운제
-		if(Cluster.isMaster){
-			my.isAjae = Ajae.checkAjae(profile.birth, profile._age);
-		}else{
-			my.isAjae = true;
-		}
-		my._birth = profile.birth;
-		my._age = profile._age;
-		delete my.profile.birth;
-		delete my.profile._age;
-		*/
 		delete my.profile.token;
 		delete my.profile.sid;
 	}else{
@@ -298,19 +270,6 @@ exports.Client = function(socket, profile, sid){
 		
 		exports.onClientMessage(my, data);
 	});
-	/* 망할 셧다운제
-	my.confirmAjae = function(input){
-		if(Ajae.confirmAjae(input, my._birth, my._age)){
-			DB.users.update([ '_id', my.id ]).set([ 'birthday', input.join('-') ]).on(function(){
-				my.sendError(445);
-			});
-		}else{
-			DB.users.update([ '_id', my.id ]).set([ 'black', `[${input.join('-')}] 생년월일이 올바르게 입력되지 않았습니다. 잠시 후 다시 시도해 주세요.` ]).on(function(){
-				my.socket.close();
-			});
-		}
-	};
-	*/
 	my.drawingCanvas = function(msg) {
 		let $room = ROOM[my.place];
 		
@@ -454,21 +413,6 @@ exports.Client = function(socket, profile, sid){
 				black = false;
 				my.noChat = true;
 			}
-			/* 망할 셧다운제
-			if(Cluster.isMaster && !my.isAjae){ // null일 수는 없다.
-				my.isAjae = Ajae.checkAjae(($user.birthday || "").split('-'));
-				if(my.isAjae === null){
-					if(my._birth) my._checkAjae = setTimeout(function(){
-						my.sendError(442);
-						my.socket.close();
-					}, 300000);
-					else{
-						my.sendError(441);
-						my.socket.close();
-						return;
-					}
-				}
-			}*/
 			my.nickname = $user.nickname;
 			my.exordial = $user.exordial || "";
 			my.equip = $user.equip || {};
@@ -1553,4 +1497,4 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 function filterRobot(item){
 	if(!item) return {};
 	return (item.robot && item.getData) ? item.getData() : item;
-}
+}}

@@ -74,11 +74,13 @@ var _setTimeout = setTimeout;
 $(document).ready(function(){
 	window.differ = new diff_match_patch()
 
+	var i;
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
-
+	$data.URL = $("#URL").html();
 	$data.ROOM_PORT = $("#ROOM_PORT").html();
 	$data.version = $("#version").html();
+	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
 	$data.NICKNAME_LIMIT = JSON.parse($("#NICKNAME_LIMIT").text());
 	$data.NICKNAME_LIMIT.REGEX.unshift(null);
 	$data.NICKNAME_LIMIT.REGEX = new (Function.prototype.bind.apply(RegExp, $data.NICKNAME_LIMIT.REGEX));
@@ -87,7 +89,9 @@ $(document).ready(function(){
 	$data._playTime = 0;
 	$data._kd = "";
 	$data._timers = [];
+	$data._obtain = [];
 	$data._wblock = {};
+	$data._shut = {};
 	$data.usersR = {};
 	EXP.push(getRequiredScore(1));
 	for(i=2; i<MAX_LEVEL; i++){
@@ -875,6 +879,13 @@ $(document).ready(function(){
 		});
 		$stage.dialog.dressOK.attr("disabled", false);
 		$stage.dialog.dress.hide();
+		$(e.currentTarget).attr('disabled', true);
+		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
+			$stage.dialog.dressOK.attr('disabled', false);
+			if(res.error) return fail(res.error);
+			
+			$stage.dialog.dress.hide();
+		});
 	});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);

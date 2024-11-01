@@ -239,13 +239,13 @@ exports.KO_INJEONG = [
 	"YRY", "KPO", "JLN", "JAN", "ZEL", "POK", "HAI",
 	"HSS", "KMV", "HDC", "HOS", "KKT", "SKT", "BLU",
 	"COM", "WEB", "NXN", "NCG", "NEM", "RBX", "CAR",
-	"MIS"/*, "EGG"*/
+	"MIS", "GES", "MAN"/*"EGG"*/
 ];
 exports.EN_INJEONG = [
-	"LOL", "COM"
+	"LOL"
 ];
 exports.KO_THEME = [
-	"30", "40", "60", "80", "90",
+	"30", "40", "50", "60", "80", "90",
 	"140", "150", "160", "170", "190",
 	"220", "230", "240", "270", "310",
 	"320", "350", "360", "420", "430",

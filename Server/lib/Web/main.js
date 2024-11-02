@@ -95,7 +95,7 @@ Server.use((req, res, next) => {
 		next();
 	}
 });
-DDDoS = new DDDoS({
+/* DDDoS = new DDDoS({
 	maxWeight: 6,
 	checkInterval: 10000,
 	rules: [{
@@ -111,6 +111,7 @@ DDDoS.rules[0].logFunction = DDDoS.rules[1].logFunction = function(ip, path){
 	JLog.warn(`DoS from IP ${ip} on ${path}`);
 };
 Server.use(DDDoS.express());
+*/
 
 WebInit.init(Server, true);
 Object.keys(ROUTES).forEach((v) => {

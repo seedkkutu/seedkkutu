@@ -2634,7 +2634,7 @@ function getAudio(k, url, cb){
 	req.open("GET", /*($data.PUBLIC ? "http://jjo.kr" : "") +*/ url);
 	req.responseType = "arraybuffer";
 	req.onload = function(e){
-		if(audioContext) audioContext.decodeAudioData(e.target.response, function(buf){
+			if(audioContext) audioContext.decodeAudioData(e.target.response, function(buf){
 			$sound[k] = buf;
 			done();
 		}, onErr); else onErr();

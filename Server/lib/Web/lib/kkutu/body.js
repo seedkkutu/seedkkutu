@@ -77,10 +77,10 @@ function applyOptions(opt){
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
 	
-	if($data.BGMVolume){
-		$data.bgm.volume = $data.BGMVolume;
-		$data.bgm = playBGM($data.bgm.key, true);
-	}else{
+		if($data.BGMVolume){
+			$data.bgm.volume = $data.BGMVolume;
+			$data.bgm = playBGM($data.bgm.key, true);
+		}else{
 		if($data.muteBGM){
 			$data.bgm.volume = 0;
 			$data.bgm.stop();
@@ -2689,6 +2689,7 @@ function playSound(key, loop){
 			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
+   gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
 			src.buffer = sound;
 		}
 		gainNode.connect(audioContext.destination);
